@@ -13,6 +13,7 @@ interface Project {
   link_url?: string;
   tags: string[];
   size: string;
+  image_position: string;
 }
 
 export function AdminDashboard() {
@@ -30,7 +31,8 @@ export function AdminDashboard() {
     image_url: '',
     link_url: '',
     tags: '', // comma separated string for input
-    size: 'medium'
+    size: 'medium',
+    image_position: 'object-center'
   });
 
   const navigate = useNavigate();
@@ -86,7 +88,8 @@ export function AdminDashboard() {
       image_url: formData.image_url,
       link_url: formData.link_url || null,
       tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean),
-      size: formData.size
+      size: formData.size,
+      image_position: formData.image_position
     };
 
     if (editingId) {
@@ -107,7 +110,7 @@ export function AdminDashboard() {
     setShowForm(false);
     setEditingId(null);
     setFormData({
-      title: '', short_description: '', long_description: '', image_url: '', link_url: '', tags: '', size: 'medium'
+      title: '', short_description: '', long_description: '', image_url: '', link_url: '', tags: '', size: 'medium', image_position: 'object-center'
     });
     fetchProjects();
   };
@@ -129,7 +132,8 @@ export function AdminDashboard() {
       image_url: project.image_url,
       link_url: project.link_url || '',
       tags: project.tags?.join(', ') || '',
-      size: project.size || 'medium'
+      size: project.size || 'medium',
+      image_position: project.image_position || 'object-center'
     });
     setShowForm(true);
   };
@@ -201,6 +205,17 @@ export function AdminDashboard() {
                 </select>
               </div>
 
+              <div className="flex flex-col gap-2 w-full md:w-1/3">
+                <label className="text-xs tracking-widest uppercase text-gray-400">Alineación de Imagen</label>
+                <select name="image_position" value={formData.image_position} onChange={handleInputChange} className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none">
+                  <option value="object-center">Centro (Por Defecto)</option>
+                  <option value="object-top">Arriba</option>
+                  <option value="object-bottom">Abajo</option>
+                  <option value="object-left">Izquierda</option>
+                  <option value="object-right">Derecha</option>
+                </select>
+              </div>
+
               <button type="submit" disabled={loading} className="mt-4 w-fit bg-white text-black px-8 py-3 font-sans uppercase tracking-[0.2em] text-xs font-bold hover:bg-accent hover:text-white transition-colors disabled:opacity-50">
                 {loading ? 'Guardando...' : (editingId ? 'Actualizar Proyecto' : 'Guardar Proyecto')}
               </button>
@@ -212,7 +227,7 @@ export function AdminDashboard() {
               <h2 className="text-xl font-serif italic opacity-80">Inventario de Proyectos</h2>
               <button 
                 onClick={() => {
-                  setFormData({ title: '', short_description: '', long_description: '', image_url: '', link_url: '', tags: '', size: 'medium' });
+                  setFormData({ title: '', short_description: '', long_description: '', image_url: '', link_url: '', tags: '', size: 'medium', image_position: 'object-center' });
                   setShowForm(true);
                 }}
                 className="flex items-center gap-2 bg-white text-black px-4 py-2 font-sans uppercase tracking-widest text-xs font-bold hover:bg-gray-200 transition-colors"
@@ -232,7 +247,7 @@ export function AdminDashboard() {
                 {projects.map((project) => (
                   <div key={project.id} className="bg-[#0a0a0a] border border-[#222] flex flex-col group">
                     <div className="h-48 w-full relative overflow-hidden bg-black">
-                      <img src={project.image_url} alt={project.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
+                      <img src={project.image_url} alt={project.title} className={`w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity ${project.image_position || 'object-center'}`} />
                     </div>
                     <div className="p-4 flex flex-col flex-1">
                       <h3 className="text-lg font-serif mb-1 truncate">{project.title}</h3>

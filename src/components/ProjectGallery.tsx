@@ -12,6 +12,7 @@ export interface Project {
   size: string;
   long_description: string;
   link_url?: string;
+  image_position: string;
 }
 
 export function ProjectGallery() {
