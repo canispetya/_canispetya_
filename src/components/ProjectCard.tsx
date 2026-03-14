@@ -8,6 +8,7 @@ interface Project {
   tags: string[];
   size: string; // 'small', 'medium', 'large'
   image_position?: string;
+  order_index?: number;
 }
 
 interface ProjectCardProps {
@@ -26,11 +27,11 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
 
   return (
     <div 
-      className={`group relative flex flex-col gap-4 cursor-pointer indicator-container ${dimensions}`}
+      className="group relative flex flex-col gap-4 cursor-pointer indicator-container w-fit h-fit mb-8 md:mb-12"
       onClick={onClick}
     >
-      {/* Image Container */}
-      <div className="relative w-full h-full overflow-hidden border border-[#222] bg-black">
+      {/* Image Container with fixed dimensions */}
+      <div className={`relative overflow-hidden border border-[#222] bg-black ${dimensions}`}>
         <img 
           src={project.image_url} 
           alt={project.title}
@@ -50,13 +51,13 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
 
       {/* Meta Information below the card */}
       <div className="flex flex-col gap-1 z-10 px-2">
-        <h3 className="text-xl md:text-2xl font-serif text-white group-hover:text-glow transition-all truncate">
+        <h3 className="text-lg md:text-2xl font-serif text-white mb-1 leading-tight line-clamp-2 group-hover:text-accent transition-all duration-300">
           {project.title}
         </h3>
         <p className="text-[10px] md:text-xs font-sans tracking-[0.2em] text-accent font-bold uppercase">
           {project.created_at ? new Date(project.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short' }) : 'Reciente'}
         </p>
-        <div className="flex gap-2 flex-wrap mt-2">
+        <div className="flex gap-2 flex-wrap mt-1">
            {project.tags.map(tag => (
              <span key={tag} className="text-[9px] md:text-[10px] font-sans border border-[#333] px-2 py-1 uppercase tracking-wider text-gray-400">
                {tag}

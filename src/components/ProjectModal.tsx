@@ -45,7 +45,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           <img 
             src={project.image_url} 
             alt={project.title}
-            className={`w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700 ${project.image_position || 'object-center'}`}
+            className={`w-full h-full object-cover transition-all duration-700 ${project.image_position || 'object-center'}`}
           />
           <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent opacity-100" />
         </div>

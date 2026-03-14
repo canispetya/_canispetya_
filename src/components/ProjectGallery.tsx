@@ -13,6 +13,7 @@ export interface Project {
   long_description: string;
   link_url?: string;
   image_position: string;
+  order_index: number;
 }
 
 export function ProjectGallery() {
@@ -25,6 +26,7 @@ export function ProjectGallery() {
       const { data, error } = await supabase
         .from('projects')
         .select('*')
+        .order('order_index', { ascending: true })
         .order('created_at', { ascending: false });
         
       if (error) {
