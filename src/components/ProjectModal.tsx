@@ -68,9 +68,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
            ))}
           </div>
 
-          <p className="font-sans text-gray-300 text-sm md:text-base leading-relaxed mb-6 md:mb-8 opacity-90 whitespace-pre-wrap">
-            {project.long_description || "Visualizando detalles del proyecto..."}
-          </p>
+          <div 
+            className="font-sans text-gray-300 text-sm md:text-base leading-relaxed mb-6 md:mb-8 opacity-90 quill-content"
+            dangerouslySetInnerHTML={{ __html: project.long_description || "Visualizando detalles del proyecto..." }}
+          />
 
           {project.link_url && (
             <a 

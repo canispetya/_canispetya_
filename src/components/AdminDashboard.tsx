@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Trash2, Edit2, Plus, X } from 'lucide-react';
+import { DefaultEditor } from 'react-simple-wysiwyg';
 
 interface Project {
   id: string;
@@ -75,6 +76,10 @@ export function AdminDashboard() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleWysiwygChange = (e: any) => {
+    setFormData({ ...formData, long_description: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -193,7 +198,9 @@ export function AdminDashboard() {
 
               <div className="flex flex-col gap-2">
                 <label className="text-xs tracking-widest uppercase text-gray-400">Descripción Larga (Para el Pop-up)</label>
-                <textarea required name="long_description" value={formData.long_description} onChange={handleInputChange} rows={6} className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none resize-none" />
+                <div className="bg-black border border-[#333] text-white custom-editor">
+                  <DefaultEditor value={formData.long_description} onChange={handleWysiwygChange} />
+                </div>
               </div>
 
               <div className="flex flex-col gap-2 w-full md:w-1/3">

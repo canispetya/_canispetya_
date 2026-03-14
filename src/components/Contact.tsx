@@ -11,9 +11,21 @@ export function Contact() {
           </h2>
         </div>
 
-        <form className="flex flex-col gap-6 w-full" onSubmit={(e) => e.preventDefault()}>
+        <form 
+          className="flex flex-col gap-6 w-full" 
+          action="https://formsubmit.co/nicko.pereira@gmail.com" 
+          method="POST"
+        >
+          {/* FormSubmit Configuration */}
+          <input type="hidden" name="_subject" value="Nuevo contacto desde tu Portafolio Web!" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="box" />
+          <input type="hidden" name="_next" value={window.location.href} />
+
           <div className="relative group">
             <input
+              required
+              name="name"
               type="text"
               id="name"
               placeholder=" "
@@ -29,6 +41,8 @@ export function Contact() {
 
           <div className="relative group">
             <input
+              required
+              name="email"
               type="email"
               id="email"
               placeholder=" "
@@ -44,6 +58,8 @@ export function Contact() {
 
           <div className="relative group">
             <textarea
+              required
+              name="message"
               id="message"
               rows={3}
               placeholder=" "

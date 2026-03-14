@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter } from 'lucide-react';
+import { Github, Linkedin, Instagram } from 'lucide-react';
 
 export function Navigation() {
   return (
@@ -15,9 +15,9 @@ export function Navigation() {
       </div>
 
       <div className="flex gap-2 md:gap-4">
-        <a href="#" className="hover:text-accent transition-colors"><Github className="w-4 h-4 md:w-5 md:h-5" /></a>
-        <a href="#" className="hover:text-accent transition-colors"><Linkedin className="w-4 h-4 md:w-5 md:h-5" /></a>
-        <a href="#" className="hover:text-accent transition-colors"><Twitter className="w-4 h-4 md:w-5 md:h-5" /></a>
+        <a href="https://github.com/canispetya" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors"><Github className="w-4 h-4 md:w-5 md:h-5" /></a>
+        <a href="https://www.linkedin.com/in/canispetya" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors"><Linkedin className="w-4 h-4 md:w-5 md:h-5" /></a>
+        <a href="https://www.instagram.com/canispetya/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors"><Instagram className="w-4 h-4 md:w-5 md:h-5" /></a>
       </div>
     </nav>
   );
