@@ -1,32 +1,37 @@
 import { Play } from 'lucide-react';
 
 interface Project {
-  id: number;
+  id: string;
   title: string;
-  date: string;
-  imageUrl: string;
+  created_at: string;
+  image_url: string;
   tags: string[];
   size: string; // 'small', 'medium', 'large'
 }
 
 interface ProjectCardProps {
   project: Project;
+  onClick: () => void;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, onClick }: ProjectCardProps) {
   // Determine dimensions based on size mimicking the asymmetric layout
+  // Uses responsive classes so it shrinks securely on mobile
   const dimensions = {
-    small: 'w-[300px] h-[400px]',
-    medium: 'w-[450px] h-[600px]',
-    large: 'w-[800px] h-[500px]',
-  }[project.size] || 'w-[500px] h-[500px]';
+    small: 'w-[80vw] md:w-[300px] h-[50vh] md:h-[400px]',
+    medium: 'w-[85vw] md:w-[450px] h-[60vh] md:h-[600px]',
+    large: 'w-[90vw] md:w-[800px] h-[55vh] md:h-[500px]',
+  }[project.size] || 'w-[85vw] md:w-[500px] h-[60vh] md:h-[500px]';
 
   return (
-    <div className={`group relative flex flex-col gap-4 cursor-pointer indicator-container ${dimensions}`}>
+    <div 
+      className={`group relative flex flex-col gap-4 cursor-pointer indicator-container ${dimensions}`}
+      onClick={onClick}
+    >
       {/* Image Container */}
       <div className="relative w-full h-full overflow-hidden border border-[#222] bg-black">
         <img 
-          src={project.imageUrl} 
+          src={project.image_url} 
           alt={project.title}
           className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
         />
@@ -43,16 +48,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Meta Information below the card */}
-      <div className="flex flex-col gap-1 z-10">
-        <h3 className="text-2xl font-serif text-white group-hover:text-glow transition-all">
+      <div className="flex flex-col gap-1 z-10 px-2">
+        <h3 className="text-xl md:text-2xl font-serif text-white group-hover:text-glow transition-all truncate">
           {project.title}
         </h3>
-        <p className="text-xs font-sans tracking-[0.2em] text-accent font-bold uppercase">
-          {project.date}
+        <p className="text-[10px] md:text-xs font-sans tracking-[0.2em] text-accent font-bold uppercase">
+          {project.created_at ? new Date(project.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short' }) : 'Reciente'}
         </p>
-        <div className="flex gap-2 mt-2">
+        <div className="flex gap-2 flex-wrap mt-2">
            {project.tags.map(tag => (
-             <span key={tag} className="text-[10px] font-sans border border-[#333] px-2 py-1 uppercase tracking-wider text-gray-400">
+             <span key={tag} className="text-[9px] md:text-[10px] font-sans border border-[#333] px-2 py-1 uppercase tracking-wider text-gray-400">
                {tag}
              </span>
            ))}
