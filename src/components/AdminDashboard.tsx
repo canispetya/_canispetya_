@@ -43,20 +43,33 @@ export function AdminDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const checkUser = async (session: any) => {
       setSession(session);
       if (!session) {
         navigate('/admin/login');
-      } else {
-        fetchProjects();
+        return;
       }
+
+      // STRICT EMAIL RESTRICTION
+      const allowedEmail = 'nicko.pereira@gmail.com';
+      if (session.user?.email !== allowedEmail) {
+        console.error("Unauthorized access attempt:", session.user?.email);
+        await supabase.auth.signOut();
+        navigate('/admin/login?error=unauthorized');
+        return;
+      }
+
+      fetchProjects();
+    };
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      checkUser(session);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      if (!session) navigate('/admin/login');
+      checkUser(session);
     });
 
     return () => subscription.unsubscribe();

@@ -1,6 +1,10 @@
 import { supabase } from '../lib/supabase';
+import { useSearchParams } from 'react-router-dom';
 
 export function Login() {
+  const [searchParams] = useSearchParams();
+  const isUnauthorized = searchParams.get('error') === 'unauthorized';
+
   const handleLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
@@ -20,6 +24,14 @@ export function Login() {
         <p className="text-gray-400 text-center text-sm font-sans mb-4">
           Inicia sesión con Google para administrar tus proyectos.
         </p>
+
+        {isUnauthorized && (
+          <div className="w-full p-4 bg-red-900/20 border border-red-500/50 rounded-sm mb-4 animate-pulse">
+            <p className="text-red-500 text-xs font-sans uppercase tracking-[0.2em] text-center">
+              Acceso Denegado: Tu correo no está autorizado.
+            </p>
+          </div>
+        )}
         <button
           onClick={handleLogin}
           className="w-full flex items-center justify-center gap-3 bg-white text-black px-6 py-3 font-sans uppercase tracking-widest text-sm hover:bg-gray-200 transition-colors"
