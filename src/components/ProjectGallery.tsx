@@ -13,6 +13,7 @@ export interface Project {
   long_description: string;
   link_url?: string;
   image_position: string;
+  image_fit?: 'cover' | 'contain';
   order_index: number;
 }
 
