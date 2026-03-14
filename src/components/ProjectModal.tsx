@@ -28,18 +28,17 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
-      <button 
-        onClick={onClose}
-        className="absolute top-4 right-4 md:top-8 md:right-8 text-white hover:text-accent transition-colors p-2"
-        aria-label="Cerrar modal"
-      >
-        <X size={32} />
-      </button>
-
       <div 
         onClick={handleContentClick}
         className="relative w-full max-w-5xl max-h-[90dvh] bg-[#0a0a0a] border border-[#222] flex flex-col md:flex-row overflow-hidden rounded-sm animate-[fadeIn_0.3s_ease-out]"
       >
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 md:top-6 md:right-6 z-50 bg-[#0a0a0a]/80 text-accent border border-accent rounded-full p-2 hover:bg-accent hover:text-white transition-all backdrop-blur-md"
+          aria-label="Cerrar modal"
+        >
+          <X size={20} />
+        </button>
         
         {/* Image Section */}
         <div className="w-full md:w-1/2 h-[35dvh] md:h-[80dvh] relative shrink-0">
