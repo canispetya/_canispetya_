@@ -1,3 +1,6 @@
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+
 export function Hero() {
   return (
     <section id="about" className="h-[100dvh] w-screen flex flex-col justify-center items-center relative overflow-hidden bg-background">
@@ -22,13 +25,26 @@ export function Hero() {
           Desarrollador full-stack especializado en React, Node y Supabase.
         </p>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-12 left-12 flex items-center gap-4 text-xs font-sans tracking-[0.2em] uppercase opacity-70">
-          <span>Desplázate</span>
-          <div className="w-24 h-[1px] bg-accent relative overflow-hidden">
-            <div className="absolute top-0 left-0 h-full bg-white w-1/3 animate-[slide_2s_ease-in-out_infinite]" />
-          </div>
-        </div>
+        {/* Improved Scroll Indicator */}
+        <motion.div 
+          className="absolute bottom-12 right-8 md:right-16 flex items-center gap-4 text-xs font-sans tracking-[0.2em] uppercase opacity-70"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 0.7, x: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          <span className="hidden sm:inline">Desliza para explorar</span>
+          <motion.div 
+            animate={{ x: [0, 8, 0] }}
+            transition={{ 
+              repeat: Infinity, 
+              duration: 1.5, 
+              ease: "easeInOut" 
+            }}
+            className="flex items-center justify-center p-2 rounded-full border border-accent/30 bg-accent/5 backdrop-blur-sm"
+          >
+            <ArrowRight size={20} className="text-accent" />
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

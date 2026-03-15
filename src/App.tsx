@@ -6,6 +6,7 @@ import { ProjectGallery } from './components/ProjectGallery';
 import { Contact } from './components/Contact';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Login } from './components/Login';
+import { Analytics } from '@vercel/analytics/react';
 
 function Portfolio() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,12 +44,12 @@ function Portfolio() {
   return (
     <div className="grainy-bg text-foreground selection:bg-accent selection:text-white h-[100dvh] w-screen overflow-hidden">
       <Navigation />
-      
+
       {/* 
         Main Horizontal Scroll Container 
         Width is fixed to viewport, but content overflows horizontally.
       */}
-      <div 
+      <div
         ref={containerRef}
         className="flex h-[100dvh] w-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth"
         style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }} // Hide native scrollbar for cleanliness
@@ -56,7 +57,7 @@ function Portfolio() {
         <div id="section-hero" className="flex-none w-screen h-[100dvh] snap-always snap-center shrink-0">
           <Hero />
         </div>
-        
+
         {/* Gallery is no longer w-screen, it expands based on content */}
         <div id="section-gallery" className="flex-none h-[100dvh] snap-always snap-start shrink-0">
           <ProjectGallery />
@@ -65,10 +66,10 @@ function Portfolio() {
         <div id="section-contact" className="flex-none w-screen h-[100dvh] snap-always snap-center shrink-0">
           <Contact />
         </div>
-        
+
         <div className="flex-none w-[100vw] md:w-[300px] h-[100dvh] bg-[#020202] flex flex-col justify-end pb-12 pr-12 snap-always snap-center shrink-0">
           <footer className="w-full text-right text-xs font-sans tracking-widest uppercase opacity-50 border-t border-[#222] pt-4 px-8 md:px-0">
-            <p>© {new Date().getFullYear()} PORTAFOLIO.<br/>TODOS LOS DERECHOS RESERVADOS.</p>
+            <p>© {new Date().getFullYear()} CANISPETYA.<br />TODOS LOS DERECHOS RESERVADOS.</p>
           </footer>
         </div>
       </div>
@@ -84,6 +85,7 @@ function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/login" element={<Login />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }
