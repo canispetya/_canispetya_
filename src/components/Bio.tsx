@@ -53,7 +53,7 @@ export function Bio() {
         >
           <div className="absolute -inset-4 border border-accent/20 translate-x-2 translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500" />
           <div className="absolute -inset-4 border border-accent/40 -translate-x-2 -translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500" />
-          <div className="relative aspect-square overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
+          <div className="relative aspect-square max-w-[300px] md:max-w-none mx-auto overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
             <img 
               src={bio.photo_url} 
               alt="Bio" 

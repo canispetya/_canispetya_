@@ -21,10 +21,10 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
   // Determine dimensions based on size mimicking the asymmetric layout
   // Uses responsive classes so it shrinks securely on mobile
   const dimensions = {
-    small: 'w-[80vw] md:w-[280px] h-[45vh] md:h-[350px]',
-    medium: 'w-[85vw] md:w-[420px] h-[55vh] md:h-[520px]',
-    large: 'w-[90vw] md:w-[750px] h-[50vh] md:h-[450px]',
-  }[project.size] || 'w-[85vw] md:w-[450px] h-[55vh] md:h-[450px]';
+    small: 'w-[80vw] md:w-[260px] h-[40vh] md:h-[300px]',
+    medium: 'w-[85vw] md:w-[400px] h-[50vh] md:h-[480px]',
+    large: 'w-[90vw] md:w-[700px] h-[45vh] md:h-[400px]',
+  }[project.size] || 'w-[85vw] md:w-[420px] h-[50vh] md:h-[400px]';
 
   return (
     <div 

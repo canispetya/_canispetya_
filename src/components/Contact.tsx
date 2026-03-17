@@ -89,10 +89,10 @@ export function Contact() {
         </div>
       )}
 
-      <div className="w-full max-w-lg md:max-w-xl flex flex-col gap-2 md:gap-4 box-border">
+      <div className="w-full max-w-lg md:max-w-xl flex flex-col gap-1 md:gap-2 box-border">
         {/* Title shifted down but with minimal gap to form */}
-        <div className="text-center md:mb-2 mt-20 md:mt-24">
-          <h2 className="text-2xl md:text-4xl font-serif italic text-white opacity-80 border-b border-accent pb-2 md:pb-4 inline-block tracking-wider">
+        <div className="text-center md:mb-1 mt-12 md:mt-16">
+          <h2 className="text-2xl md:text-3xl font-serif italic text-white opacity-80 border-b border-accent pb-1 md:pb-2 inline-block tracking-wider">
             Contáctame
           </h2>
         </div>
@@ -140,7 +140,7 @@ export function Contact() {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="group relative self-center md:self-start mt-2 flex items-center justify-center gap-2 md:gap-4 bg-transparent border border-white px-4 md:px-8 py-3 md:py-4 text-white font-display font-bold uppercase tracking-widest md:tracking-[0.2em] text-xs sm:text-sm md:text-base hover:bg-white hover:text-black transition-all duration-300 w-full md:w-auto shrink-0 disabled:opacity-50"
+            className="group relative self-center md:self-start mt-0 flex items-center justify-center gap-2 md:gap-4 bg-transparent border border-white px-4 md:px-8 py-2 md:py-3 text-white font-display font-bold uppercase tracking-widest md:tracking-[0.2em] text-xs sm:text-sm md:text-base hover:bg-white hover:text-black transition-all duration-300 w-full md:w-auto shrink-0 disabled:opacity-50"
           >
             {status === 'loading' ? 'Enviando...' : 'Enviar Mensaje'}
             <Send size={16} className={`group-hover:translate-x-2 transition-transform shrink-0 ${status === 'loading' ? 'animate-pulse' : ''}`} />
