@@ -41,7 +41,7 @@ export function ProjectGallery() {
   }, []);
 
   return (
-    <section id="projects" className="relative h-[100dvh] bg-[#050505] flex items-center px-[5vw] md:px-[10vw]">
+    <section id="projects" className="relative h-[100dvh] bg-[#050505] flex items-center px-[5vw] md:px-[10vw] py-16 md:py-24">
       <div className="absolute top-24 left-6 md:left-12 z-10 w-48 md:w-64">
         <h2 className="text-3xl md:text-4xl font-serif italic text-white opacity-90 border-l-4 border-accent pl-4">
           Proyectos importantes

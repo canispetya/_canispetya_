@@ -17,29 +17,51 @@ function Portfolio() {
     const container = containerRef.current;
     if (!container) return;
 
-    // Convert vertical native wheel scrolling to snap horizontally
-    const handleWheel = (e: WheelEvent) => {
-      // Allow default vertical scroll if the target is a textarea (like in contact form)
-      if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
+    // Autofocus container on mount for immediate keyboard support
+    container.focus();
 
-      e.preventDefault();
-
+    const handleScroll = (delta: number) => {
       if (isScrolling.current) return;
-
-      const direction = e.deltaY > 0 ? 1 : -1;
+      
+      const direction = delta > 0 ? 1 : -1;
       isScrolling.current = true;
 
       // Scroll exactly one viewport width at a time
       container.scrollBy({ left: direction * window.innerWidth, behavior: 'smooth' });
 
-      // Debounce to prevent rapid continuous scrolling
+      // Faster debounce (400ms) for better responsiveness
       setTimeout(() => {
         isScrolling.current = false;
-      }, 700);
+      }, 400);
+    };
+
+    // Convert vertical native wheel scrolling to snap horizontally
+    const handleWheel = (e: WheelEvent) => {
+      // Allow default vertical scroll if the target is a textarea (like in contact form)
+      if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
+      e.preventDefault();
+      handleScroll(e.deltaY);
+    };
+
+    // Keyboard support for immediate interaction
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
+      
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        handleScroll(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        handleScroll(-1);
+      }
     };
 
     container.addEventListener('wheel', handleWheel, { passive: false });
-    return () => container.removeEventListener('wheel', handleWheel);
+    container.addEventListener('keydown', handleKeyDown);
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+      container.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   return (
@@ -53,7 +75,8 @@ function Portfolio() {
       <div
         ref={containerRef}
         id="main-scroll-container"
-        className="flex h-[100dvh] w-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth"
+        tabIndex={0}
+        className="flex h-[100dvh] w-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth outline-none focus:outline-none"
         style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }} // Hide native scrollbar for cleanliness
       >
         <div id="section-hero" className="flex-none w-screen h-[100dvh] snap-always snap-center shrink-0">
@@ -73,9 +96,28 @@ function Portfolio() {
           <Contact />
         </div>
 
-        <div className="flex-none w-[100vw] md:w-[300px] h-[100dvh] bg-[#020202] flex flex-col justify-end pb-12 pr-12 snap-always snap-center shrink-0">
-          <footer className="w-full text-right text-xs font-sans tracking-widest uppercase opacity-50 border-t border-[#222] pt-4 px-8 md:px-0">
-            <p>© {new Date().getFullYear()} CANISPETYA.<br />TODOS LOS DERECHOS RESERVADOS.</p>
+        <div className="flex-none w-[100vw] md:w-[320px] h-[100dvh] bg-[#020202] relative flex flex-col snap-always snap-center shrink-0 border-l border-accent/30">
+          {/* Vertical Red Line Separator */}
+          <div className="absolute left-0 top-0 w-[2px] h-full bg-accent shadow-[0_0_15px_rgba(227,66,52,0.5)] z-20" />
+
+          {/* Local Video Loop Precisely Centered */}
+          <div className="flex-1 flex items-center justify-center p-8">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="w-48 h-48 md:w-56 md:h-56 object-cover rounded-full border border-accent/20 shadow-[0_0_50px_rgba(227,66,52,0.15)] transition-all duration-700"
+            >
+              <source src="/assets/video/canis360.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          <footer className="w-full text-center pb-12 px-8 relative z-10 border-t border-[#222] pt-8 bg-black/40 backdrop-blur-sm">
+            <p className="text-[10px] md:text-xs font-sans tracking-[0.2em] uppercase opacity-50 leading-relaxed">
+              © {new Date().getFullYear()} CANISPETYA.<br />
+              <span className="opacity-30">TODOS LOS DERECHOS RESERVADOS.</span>
+            </p>
           </footer>
         </div>
       </div>

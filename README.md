@@ -1,3 +1,29 @@
+# CANISPETYA - Portafolio Personal
+
+Este proyecto es el portafolio personal de CANISPETYA, diseñado con una estética moderna, oscura y minimalista.
+
+## 🎨 Sistema de Diseño
+
+### Colores
+- **Fondo (Background):** `#040404` (Negro profundo)
+- **Texto (Foreground):** `#f1f1f1` (Blanco suave)
+- **Acento (Accent):** `#E34234` (Rojo/Naranja intenso)
+- **Marca (Brand):** `#FF4500` (Naranja vibrante para brillos)
+
+### Tipografía
+- **Display:** `Syne`
+  - **Pesos:** 400, 700, 800 (Extra Bold)
+  - **Uso:** Títulos principales (`7vw` - `7xl`).
+- **Serif:** `Playfair Display`
+  - **Pesos:** 400, 700 (Bold)
+  - **Estilo:** Italic (predominante en encabezados de sección).
+  - **Uso:** Subtítulos y acentos visuales (`text-xl` - `text-4xl`).
+- **Sans:** `Inter`
+  - **Pesos:** 300, 400, 500, 600
+  - **Uso:** Cuerpo de texto, etiquetas UI y navegación (`text-[10px]` - `text-lg`).
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

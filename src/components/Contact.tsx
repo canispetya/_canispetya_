@@ -51,7 +51,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative h-[100dvh] w-screen bg-[#020202] flex flex-col justify-center items-center p-6 md:p-12 z-10 overflow-y-auto">
+    <section id="contact" className="relative h-[100dvh] w-screen bg-[#020202] flex flex-col justify-center items-center p-6 md:p-12 z-10 overflow-hidden">
       {/* Cinematic Success Overlay */}
       {status === 'success' && (
         <div 
@@ -89,10 +89,10 @@ export function Contact() {
         </div>
       )}
 
-      <div className="w-full max-w-lg md:max-w-2xl flex flex-col gap-6 md:gap-10 box-border">
-        {/* Title in normal document flow, not absolute */}
-        <div className="text-center mt-12 md:mt-20">
-          <h2 className="text-2xl md:text-4xl font-serif italic text-white opacity-80 border-b border-accent pb-2 md:pb-4 inline-block uppercase tracking-wider">
+      <div className="w-full max-w-lg md:max-w-xl flex flex-col gap-2 md:gap-4 box-border">
+        {/* Title shifted down but with minimal gap to form */}
+        <div className="text-center md:mb-2 mt-20 md:mt-24">
+          <h2 className="text-2xl md:text-4xl font-serif italic text-white opacity-80 border-b border-accent pb-2 md:pb-4 inline-block tracking-wider">
             Contáctame
           </h2>
         </div>
@@ -112,7 +112,7 @@ export function Contact() {
               name="name"
               type="text"
               placeholder="Nombre Completo"
-              className={`w-full bg-transparent border-b ${errors.name ? 'border-accent' : 'border-white/20'} py-4 text-white font-serif italic text-base md:text-lg focus:border-accent outline-none transition-colors placeholder:text-gray-600 placeholder:uppercase placeholder:text-[10px] placeholder:tracking-widest placeholder:font-sans`}
+              className={`w-full bg-transparent border-b ${errors.name ? 'border-accent' : 'border-white/20'} py-2 md:py-4 text-white font-serif italic text-base md:text-lg focus:border-accent outline-none transition-colors placeholder:text-gray-600 placeholder:uppercase placeholder:text-[10px] placeholder:tracking-widest placeholder:font-sans`}
             />
             {errors.name && <span className="absolute -bottom-5 left-0 text-[10px] text-accent font-sans font-bold uppercase tracking-tighter animate-[fadeIn_0.3s_ease-out]">{errors.name}</span>}
           </div>
@@ -122,7 +122,7 @@ export function Contact() {
               type="email"
               name="email"
               placeholder="Tu Correo Electrónico"
-              className={`w-full bg-transparent border-b ${errors.email ? 'border-accent' : 'border-white/20'} py-4 text-white font-serif italic text-base md:text-lg focus:border-accent outline-none transition-colors placeholder:text-gray-600 placeholder:uppercase placeholder:text-[10px] placeholder:tracking-widest placeholder:font-sans`}
+              className={`w-full bg-transparent border-b ${errors.email ? 'border-accent' : 'border-white/20'} py-2 md:py-4 text-white font-serif italic text-base md:text-lg focus:border-accent outline-none transition-colors placeholder:text-gray-600 placeholder:uppercase placeholder:text-[10px] placeholder:tracking-widest placeholder:font-sans`}
             />
             {errors.email && <span className="absolute -bottom-5 left-0 text-[10px] text-accent font-sans font-bold uppercase tracking-tighter animate-[fadeIn_0.3s_ease-out]">{errors.email}</span>}
           </div>
@@ -130,9 +130,9 @@ export function Contact() {
           <div className="relative group">
             <textarea
               name="message"
-              rows={4}
+              rows={3}
               placeholder="Tu Mensaje"
-              className={`w-full bg-transparent border-b ${errors.message ? 'border-accent' : 'border-white/20'} py-4 text-white font-serif italic text-base md:text-lg focus:border-accent outline-none transition-colors resize-none placeholder:text-gray-600 placeholder:uppercase placeholder:text-[10px] placeholder:tracking-widest placeholder:font-sans`}
+              className={`w-full bg-transparent border-b ${errors.message ? 'border-accent' : 'border-white/20'} py-2 md:py-4 text-white font-serif italic text-base md:text-lg focus:border-accent outline-none transition-colors resize-none placeholder:text-gray-600 placeholder:uppercase placeholder:text-[10px] placeholder:tracking-widest placeholder:font-sans`}
             />
             {errors.message && <span className="absolute -bottom-5 left-0 text-[10px] text-accent font-sans font-bold uppercase tracking-tighter animate-[fadeIn_0.3s_ease-out]">{errors.message}</span>}
           </div>
@@ -140,7 +140,7 @@ export function Contact() {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="group relative self-center md:self-start mt-2 md:mt-4 flex items-center justify-center gap-2 md:gap-4 bg-transparent border border-white px-4 md:px-8 py-3 md:py-4 text-white font-display font-bold uppercase tracking-widest md:tracking-[0.2em] text-xs sm:text-sm md:text-base hover:bg-white hover:text-black transition-all duration-300 w-full md:w-auto shrink-0 disabled:opacity-50"
+            className="group relative self-center md:self-start mt-2 flex items-center justify-center gap-2 md:gap-4 bg-transparent border border-white px-4 md:px-8 py-3 md:py-4 text-white font-display font-bold uppercase tracking-widest md:tracking-[0.2em] text-xs sm:text-sm md:text-base hover:bg-white hover:text-black transition-all duration-300 w-full md:w-auto shrink-0 disabled:opacity-50"
           >
             {status === 'loading' ? 'Enviando...' : 'Enviar Mensaje'}
             <Send size={16} className={`group-hover:translate-x-2 transition-transform shrink-0 ${status === 'loading' ? 'animate-pulse' : ''}`} />
