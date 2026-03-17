@@ -19,10 +19,20 @@ interface Project {
   order_index: number;
 }
 
+interface BioData {
+  id: string;
+  review: string;
+  photo_url: string;
+  studies: string[];
+  badges: string[];
+}
+
 export function AdminDashboard() {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [bioData, setBioData] = useState<BioData | null>(null);
+  const [activeTab, setActiveTab] = useState<'projects' | 'bio'>('projects');
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   
@@ -38,6 +48,13 @@ export function AdminDashboard() {
     image_position: 'object-center',
     image_fit: 'cover' as 'cover' | 'contain',
     order_index: 0
+  });
+
+  const [bioFormData, setBioFormData] = useState({
+    review: '',
+    photo_url: '',
+    studies: '', // new line separated
+    badges: ''   // comma separated
   });
 
   const navigate = useNavigate();
@@ -60,6 +77,7 @@ export function AdminDashboard() {
       }
 
       fetchProjects();
+      fetchBio();
     };
 
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -88,6 +106,24 @@ export function AdminDashboard() {
     setLoading(false);
   };
 
+  const fetchBio = async () => {
+    const { data, error } = await supabase
+      .from('bio')
+      .select('*')
+      .single();
+    
+    if (error) console.error('Error fetching bio:', error);
+    else if (data) {
+      setBioData(data);
+      setBioFormData({
+        review: data.review || '',
+        photo_url: data.photo_url || '',
+        studies: data.studies?.join('\n') || '',
+        badges: data.badges?.join(', ') || ''
+      });
+    }
+  };
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
   };
@@ -98,6 +134,38 @@ export function AdminDashboard() {
 
   const handleWysiwygChange = (e: any) => {
     setFormData({ ...formData, long_description: e.target.value });
+  };
+
+  const handleBioInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setBioFormData({ ...bioFormData, [e.target.name]: e.target.value });
+  };
+
+  const handleBioWysiwygChange = (e: any) => {
+    setBioFormData({ ...bioFormData, review: e.target.value });
+  };
+
+  const handleBioSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const payload = {
+      review: bioFormData.review,
+      photo_url: bioFormData.photo_url,
+      studies: bioFormData.studies.split('\n').map(s => s.trim()).filter(Boolean),
+      badges: bioFormData.badges.split(',').map(b => b.trim()).filter(Boolean),
+      updated_at: new Date().toISOString()
+    };
+
+    const { error } = await supabase
+      .from('bio')
+      .update(payload)
+      .eq('id', bioData?.id || '00000000-0000-0000-0000-000000000000');
+
+    if (error) console.error("Bio update error:", error);
+    
+    fetchBio();
+    setLoading(false);
+    alert("Biografía actualizada correctamente");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -183,7 +251,23 @@ export function AdminDashboard() {
           </button>
         </div>
 
-        {showForm ? (
+        <div className="flex gap-8 mb-8 border-b border-[#222]">
+          <button 
+            onClick={() => setActiveTab('projects')}
+            className={`pb-4 px-2 text-xs font-sans uppercase tracking-[0.2em] transition-all ${activeTab === 'projects' ? 'text-accent border-b-2 border-accent' : 'text-gray-500 hover:text-white'}`}
+          >
+            Gestión de Proyectos
+          </button>
+          <button 
+            onClick={() => setActiveTab('bio')}
+            className={`pb-4 px-2 text-xs font-sans uppercase tracking-[0.2em] transition-all ${activeTab === 'bio' ? 'text-accent border-b-2 border-accent' : 'text-gray-500 hover:text-white'}`}
+          >
+            Mi Biografía
+          </button>
+        </div>
+
+        {activeTab === 'projects' ? (
+          showForm ? (
           <div className="bg-[#0a0a0a] border border-[#333] p-8 rounded-sm animate-[fadeIn_0.3s_ease-out]">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-xl font-serif italic text-accent">{editingId ? 'Editar Proyecto' : 'Nuevo Proyecto'}</h2>
@@ -309,6 +393,55 @@ export function AdminDashboard() {
                 ))}
               </div>
             )}
+          </div>
+        )) : (
+          <div className="bg-[#0a0a0a] border border-[#333] p-8 rounded-sm">
+            <h2 className="text-xl font-serif italic text-accent mb-8">Editar Biografía</h2>
+            <form onSubmit={handleBioSubmit} className="flex flex-col gap-6 font-sans">
+              <div className="flex flex-col gap-2">
+                <label className="text-xs tracking-widest uppercase text-gray-400">Foto de Perfil (URL)</label>
+                <input 
+                  name="photo_url" 
+                  value={bioFormData.photo_url} 
+                  onChange={handleBioInputChange} 
+                  required
+                  className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none" 
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label className="text-xs tracking-widest uppercase text-gray-400">Reseña / Bio</label>
+                <div className="bg-black border border-[#333] text-white custom-editor">
+                  <DefaultEditor value={bioFormData.review} onChange={handleBioWysiwygChange} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs tracking-widest uppercase text-gray-400">Estudios (uno por línea)</label>
+                  <textarea 
+                    name="studies" 
+                    value={bioFormData.studies} 
+                    onChange={handleBioInputChange} 
+                    rows={5}
+                    className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none font-sans" 
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs tracking-widest uppercase text-gray-400">Badges / Skills (separados por coma)</label>
+                  <input 
+                    name="badges" 
+                    value={bioFormData.badges} 
+                    onChange={handleBioInputChange} 
+                    className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none" 
+                  />
+                </div>
+              </div>
+
+              <button type="submit" disabled={loading} className="mt-4 w-fit bg-white text-black px-8 py-3 font-sans uppercase tracking-[0.2em] text-xs font-bold hover:bg-accent hover:text-white transition-colors disabled:opacity-50">
+                {loading ? 'Guardando...' : 'Actualizar Biografía'}
+              </button>
+            </form>
           </div>
         )}
       </div>

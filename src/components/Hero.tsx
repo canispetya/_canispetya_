@@ -25,14 +25,27 @@ export function Hero() {
           Desarrollador full-stack especializado en React, Node y Supabase.
         </p>
 
-        {/* Improved Scroll Indicator */}
+      </div>
+
+      {/* Improved Scroll Indicator */}
+      <a 
+        href="#first-project" 
+        onClick={(e) => {
+          e.preventDefault();
+          const firstProject = document.getElementById('first-project');
+          if (firstProject) {
+            firstProject.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+          }
+        }}
+        className="absolute bottom-12 right-8 md:right-16 z-30 group"
+      >
         <motion.div 
-          className="absolute bottom-12 right-8 md:right-16 flex items-center gap-4 text-xs font-sans tracking-[0.2em] uppercase opacity-70"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 0.7, x: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          className="flex items-center gap-4 text-xs font-sans tracking-[0.2em] uppercase text-accent group-hover:text-accent transition-all duration-300 cursor-pointer group-hover:scale-110"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <span className="hidden sm:inline">Desliza para explorar</span>
+          <span className="hidden sm:inline opacity-70 group-hover:opacity-100 transition-opacity">Desliza para explorar</span>
           <motion.div 
             animate={{ x: [0, 8, 0] }}
             transition={{ 
@@ -40,12 +53,12 @@ export function Hero() {
               duration: 1.5, 
               ease: "easeInOut" 
             }}
-            className="flex items-center justify-center p-2 rounded-full border border-accent/30 bg-accent/5 backdrop-blur-sm"
+            className="flex items-center justify-center p-3 rounded-full border border-accent/40 bg-accent/10 backdrop-blur-md shadow-[0_0_25px_rgba(227,66,52,0.6)] group-hover:shadow-[0_0_35px_rgba(227,66,52,0.8)] transition-shadow"
           >
-            <ArrowRight size={20} className="text-accent" />
+            <ArrowRight size={24} className="text-accent filter drop-shadow-[0_0_8px_rgba(227,66,52,0.8)]" />
           </motion.div>
         </motion.div>
-      </div>
+      </a>
     </section>
   );
 }

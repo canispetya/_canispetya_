@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { Navigation } from './components/Navigation';
 import { ProjectGallery } from './components/ProjectGallery';
 import { Contact } from './components/Contact';
+import { Bio } from './components/Bio';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Login } from './components/Login';
 import { Analytics } from '@vercel/analytics/react';
@@ -51,6 +52,7 @@ function Portfolio() {
       */}
       <div
         ref={containerRef}
+        id="main-scroll-container"
         className="flex h-[100dvh] w-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth"
         style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }} // Hide native scrollbar for cleanliness
       >
@@ -61,6 +63,10 @@ function Portfolio() {
         {/* Gallery is no longer w-screen, it expands based on content */}
         <div id="section-gallery" className="flex-none h-[100dvh] snap-always snap-start shrink-0">
           <ProjectGallery />
+        </div>
+
+        <div id="section-bio" className="flex-none w-screen h-[100dvh] snap-always snap-center shrink-0">
+          <Bio />
         </div>
 
         <div id="section-contact" className="flex-none w-screen h-[100dvh] snap-always snap-center shrink-0">

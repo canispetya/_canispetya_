@@ -58,8 +58,8 @@ export function ProjectGallery() {
             Aún no hay proyectos.
           </div>
         ) : (
-          projects.map((project) => (
-            <div key={project.id} className="snap-center shrink-0">
+          projects.map((project, index) => (
+            <div key={project.id} id={index === 0 ? "first-project" : undefined} className="snap-center shrink-0">
               <ProjectCard 
                 project={project} 
                 onClick={() => setSelectedProject(project)}

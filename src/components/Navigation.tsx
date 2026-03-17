@@ -5,13 +5,32 @@ export function Navigation() {
     <nav className="fixed top-0 left-0 w-full z-50 px-4 md:px-6 py-4 flex justify-between items-center bg-transparent mix-blend-difference">
       <div className="flex gap-3 md:gap-6 text-[10px] md:text-sm font-sans tracking-widest uppercase">
         <a href="#projects" className="hover:text-accent transition-colors">Proyectos</a>
-        <a href="#about" className="hover:text-accent transition-colors hidden sm:inline">About</a>
+        <a 
+          href="#section-bio" 
+          onClick={(e) => {
+            e.preventDefault();
+            const bio = document.getElementById('section-bio');
+            bio?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          className="hover:text-accent transition-colors hidden sm:inline"
+        >
+          Bio
+        </a>
       </div>
 
       <div className="absolute left-1/2 -translate-x-1/2">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-display font-bold tracking-tighter text-glow cursor-pointer whitespace-nowrap">
-          CANISPETYA
-        </h1>
+        <a 
+          href="#section-hero"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('main-scroll-container')?.scrollTo({ left: 0, behavior: 'smooth' });
+          }}
+          className="block group"
+        >
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-display font-bold tracking-tighter text-glow cursor-pointer whitespace-nowrap active:scale-95 transition-transform">
+            CANISPETYA
+          </h1>
+        </a>
       </div>
 
       <div className="flex gap-2 md:gap-4">
