@@ -53,13 +53,23 @@ export function Bio() {
         >
           <div className="absolute -inset-4 border border-accent/20 translate-x-2 translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500" />
           <div className="absolute -inset-4 border border-accent/40 -translate-x-2 -translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500" />
-          <div className="relative aspect-square max-w-[300px] md:max-w-none mx-auto overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
+          <motion.div 
+            initial={{ filter: "grayscale(100%)", scale: 1.1 }}
+            whileInView={{ filter: "grayscale(0%)", scale: 1 }}
+            transition={{ 
+              duration: 2, 
+              delay: 1.2, 
+              ease: "easeInOut" 
+            }}
+            viewport={{ once: false, amount: 0.5 }}
+            className="relative aspect-square max-w-[300px] md:max-w-none mx-auto overflow-hidden group transition-all duration-700 shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+          >
             <img 
               src={bio.photo_url} 
               alt="Bio" 
-              className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700"
+              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
             />
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Content */}

@@ -4,7 +4,17 @@ export function Navigation() {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 px-6 md:px-16 py-5 flex justify-between items-center bg-transparent mix-blend-difference">
       <div className="flex gap-4 md:gap-8 text-[11px] md:text-sm font-sans tracking-[0.2em] uppercase">
-        <a href="#projects" className="hover:text-accent transition-colors">Proyectos</a>
+        <a 
+          href="#section-gallery" 
+          onClick={(e) => {
+            e.preventDefault();
+            const gallery = document.getElementById('section-gallery');
+            gallery?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          className="hover:text-accent transition-colors"
+        >
+          Proyectos
+        </a>
         <a 
           href="#section-bio" 
           onClick={(e) => {
