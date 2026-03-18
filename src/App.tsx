@@ -21,6 +21,9 @@ function Portfolio() {
     container.focus();
 
     const handleScroll = (delta: number) => {
+      // Skip if a modal is open (modals have z-[100])
+      if (document.querySelector('.z-\\[100\\]')) return;
+      
       if (isScrolling.current) return;
       
       const direction = delta > 0 ? 1 : -1;
@@ -39,6 +42,15 @@ function Portfolio() {
     const handleWheel = (e: WheelEvent) => {
       // Allow default vertical scroll if the target is a textarea (like in contact form)
       if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
+      
+      // If modal is open, we only prevent default if we're NOT over the modal content
+      // to avoid weird double scrolls, but the browser usually handles nested scrolls fine
+      // if we don't preventDefault.
+      if (document.querySelector('.z-\\[100\\]')) {
+        // If the event is within the modal, don't preventDefault to allow natural vertical scrolling
+        return;
+      }
+
       e.preventDefault();
       handleScroll(e.deltaY);
     };
@@ -46,6 +58,9 @@ function Portfolio() {
     // Keyboard support for immediate interaction
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
+      
+      // If modal is open, let standard keyboard scrolling work inside it
+      if (document.querySelector('.z-\\[100\\]')) return;
       
       if (e.key === 'ArrowRight') {
         e.preventDefault();
