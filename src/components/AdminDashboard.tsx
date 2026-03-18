@@ -151,6 +151,7 @@ export function AdminDashboard() {
     setLoading(true);
 
     const payload = {
+      id: bioData?.id || '00000000-0000-0000-0000-000000000000',
       review: bioFormData.review,
       photo_url: bioFormData.photo_url,
       studies: bioFormData.studies.split('\n').map(s => s.trim()).filter(Boolean),
@@ -160,14 +161,17 @@ export function AdminDashboard() {
 
     const { error } = await supabase
       .from('bio')
-      .update(payload)
-      .eq('id', bioData?.id || '00000000-0000-0000-0000-000000000000');
+      .upsert(payload);
 
-    if (error) console.error("Bio update error:", error);
+    if (error) {
+      console.error("Bio update error:", error);
+      alert("Error al guardar: " + error.message);
+    } else {
+      await fetchBio();
+      alert("Biografía actualizada correctamente");
+    }
     
-    fetchBio();
     setLoading(false);
-    alert("Biografía actualizada correctamente");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
