@@ -42,7 +42,7 @@ export function Bio() {
   if (!bio) return null;
 
   return (
-    <section id="section-bio" className="min-h-[100dvh] w-screen bg-[#080808] flex items-center py-20 px-[5vw] md:px-[10vw]">
+    <section id="section-bio" className="h-[100dvh] w-screen bg-[#080808] flex items-start lg:items-center py-20 px-[5vw] md:px-[10vw] overflow-y-auto overflow-x-hidden">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         {/* Photo with frame/glitch aesthetic */}
         <motion.div 
