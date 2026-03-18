@@ -51,7 +51,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         {/* Content Section */}
-        <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-col overflow-y-auto">
+        <div id="modal-scroll-content" className="w-full md:w-1/2 p-6 md:p-12 flex flex-col overflow-y-auto">
           <p className="text-accent font-sans text-xs tracking-widest uppercase mb-2 md:mb-4">
             {project.created_at ? new Date(project.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long' }) : 'Proyecto'}
           </p>

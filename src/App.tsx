@@ -43,12 +43,14 @@ function Portfolio() {
       // Allow default vertical scroll if the target is a textarea (like in contact form)
       if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
       
-      // If modal is open, we only prevent default if we're NOT over the modal content
-      // to avoid weird double scrolls, but the browser usually handles nested scrolls fine
-      // if we don't preventDefault.
-      if (document.querySelector('.z-\\[100\\]')) {
-        // If the event is within the modal, don't preventDefault to allow natural vertical scrolling
-        return;
+      const modal = document.querySelector('.z-\\[100\\]');
+      if (modal) {
+        // Proxy wheel event to the scrollable container inside the modal
+        const scrollable = modal.querySelector('.overflow-y-auto');
+        if (scrollable) {
+          scrollable.scrollBy({ top: e.deltaY, behavior: 'auto' });
+          return;
+        }
       }
 
       e.preventDefault();
@@ -59,8 +61,20 @@ function Portfolio() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
       
-      // If modal is open, let standard keyboard scrolling work inside it
-      if (document.querySelector('.z-\\[100\\]')) return;
+      const modal = document.querySelector('.z-\\[100\\]');
+      if (modal) {
+        const scrollable = modal.querySelector('.overflow-y-auto') as HTMLElement;
+        if (scrollable) {
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            scrollable.scrollBy({ top: 100, behavior: 'smooth' });
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            scrollable.scrollBy({ top: -100, behavior: 'smooth' });
+          }
+          return;
+        }
+      }
       
       if (e.key === 'ArrowRight') {
         e.preventDefault();
