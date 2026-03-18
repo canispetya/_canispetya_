@@ -10,6 +10,7 @@ interface Project {
   image_position?: string;
   image_fit?: 'cover' | 'contain';
   order_index?: number;
+  type: string;
 }
 
 interface ProjectCardProps {

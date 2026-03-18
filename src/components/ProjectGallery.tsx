@@ -15,6 +15,7 @@ export interface Project {
   image_position: string;
   image_fit?: 'cover' | 'contain';
   order_index: number;
+  type: string;
 }
 
 export function ProjectGallery() {
@@ -58,14 +59,36 @@ export function ProjectGallery() {
             Aún no hay proyectos.
           </div>
         ) : (
-          projects.map((project, index) => (
-            <div key={project.id} id={index === 0 ? "first-project" : undefined} className="snap-center shrink-0">
-              <ProjectCard 
-                project={project} 
-                onClick={() => setSelectedProject(project)}
-              />
-            </div>
-          ))
+          projects.map((project, index) => {
+            if (project.type === 'decoration') {
+              const dimensions = {
+                small: 'w-[80vw] md:w-[260px] h-[30vh] md:h-[200px]',
+                medium: 'w-[85vw] md:w-[400px] h-[40vh] md:h-[350px]',
+                large: 'w-[90vw] md:w-[700px] h-[35vh] md:h-[300px]',
+              }[project.size] || 'w-[85vw] md:w-[420px] h-[40vh] md:h-[300px]';
+
+              return (
+                <div key={project.id} className="snap-center shrink-0 mb-8 md:mb-12 pointer-events-none">
+                  <div className={`relative overflow-hidden border border-white/5 bg-transparent ${dimensions}`}>
+                    <img 
+                      src={project.image_url} 
+                      alt="decoration" 
+                      className={`w-full h-full ${project.image_fit === 'contain' ? 'object-contain' : 'object-cover'} opacity-80 ${project.image_position || 'object-center'}`}
+                    />
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <div key={project.id} id={index === 0 ? "first-project" : undefined} className="snap-center shrink-0">
+                <ProjectCard 
+                  project={project} 
+                  onClick={() => setSelectedProject(project)}
+                />
+              </div>
+            );
+          })
         )}
       </div>
 

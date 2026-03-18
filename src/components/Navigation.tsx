@@ -2,8 +2,8 @@ import { Github, Linkedin, Instagram } from 'lucide-react';
 
 export function Navigation() {
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 px-4 md:px-6 py-4 flex justify-between items-center bg-transparent mix-blend-difference">
-      <div className="flex gap-3 md:gap-6 text-[10px] md:text-sm font-sans tracking-widest uppercase">
+    <nav className="fixed top-0 left-0 w-full z-50 px-6 md:px-16 py-5 flex justify-between items-center bg-transparent mix-blend-difference">
+      <div className="flex gap-4 md:gap-8 text-[11px] md:text-sm font-sans tracking-[0.2em] uppercase">
         <a href="#projects" className="hover:text-accent transition-colors">Proyectos</a>
         <a 
           href="#section-bio" 
@@ -27,13 +27,13 @@ export function Navigation() {
           }}
           className="block group"
         >
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-display font-bold tracking-tighter text-glow cursor-pointer whitespace-nowrap active:scale-95 transition-transform">
+          <h1 className="text-xl md:text-2xl font-display font-bold tracking-tighter text-glow cursor-pointer whitespace-nowrap active:scale-95 transition-transform">
             CANISPETYA
           </h1>
         </a>
       </div>
 
-      <div className="flex gap-2 md:gap-4">
+      <div className="flex gap-3 md:gap-5">
         <a href="https://github.com/canispetya" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors"><Github className="w-4 h-4 md:w-5 md:h-5" /></a>
         <a href="https://www.linkedin.com/in/canispetya" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors"><Linkedin className="w-4 h-4 md:w-5 md:h-5" /></a>
         <a href="https://www.instagram.com/canispetya/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors"><Instagram className="w-4 h-4 md:w-5 md:h-5" /></a>

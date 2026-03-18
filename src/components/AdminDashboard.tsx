@@ -17,6 +17,7 @@ interface Project {
   image_position: string;
   image_fit?: 'cover' | 'contain';
   order_index: number;
+  type: string;
 }
 
 interface BioData {
@@ -47,7 +48,8 @@ export function AdminDashboard() {
     size: 'medium',
     image_position: 'object-center',
     image_fit: 'cover' as 'cover' | 'contain',
-    order_index: 0
+    order_index: 0,
+    type: 'project'
   });
 
   const [bioFormData, setBioFormData] = useState({
@@ -182,7 +184,8 @@ export function AdminDashboard() {
       size: formData.size,
       image_position: formData.image_position,
       image_fit: formData.image_fit || 'cover',
-      order_index: Number(formData.order_index) || 0
+      order_index: Number(formData.order_index) || 0,
+      type: formData.type || 'project'
     };
 
     if (editingId) {
@@ -203,7 +206,7 @@ export function AdminDashboard() {
     setShowForm(false);
     setEditingId(null);
     setFormData({
-      title: '', short_description: '', long_description: '', image_url: '', link_url: '', tags: '', size: 'medium', image_position: 'object-center', image_fit: 'cover', order_index: 0
+      title: '', short_description: '', long_description: '', image_url: '', link_url: '', tags: '', size: 'medium', image_position: 'object-center', image_fit: 'cover', order_index: 0, type: 'project'
     });
     fetchProjects();
   };
@@ -228,7 +231,8 @@ export function AdminDashboard() {
       size: project.size || 'medium',
       image_position: project.image_position || 'object-center',
       image_fit: (project.image_fit as any) || 'cover',
-      order_index: project.order_index || 0
+      order_index: project.order_index || 0,
+      type: project.type || 'project'
     });
     setShowForm(true);
   };
@@ -280,34 +284,46 @@ export function AdminDashboard() {
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-6 font-sans">
+              <div className="flex flex-col gap-2 w-full md:w-1/3">
+                <label className="text-xs tracking-widest uppercase text-gray-400 font-bold text-accent">Tipo de Elemento</label>
+                <select name="type" value={formData.type} onChange={handleInputChange} className="bg-black border-2 border-accent/40 p-3 text-white focus:border-accent outline-none font-bold">
+                  <option value="project">Proyecto (Con ficha y detalles)</option>
+                  <option value="decoration">Decoración (Solo imagen/gif)</option>
+                </select>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs tracking-widest uppercase text-gray-400">Título *</label>
+                  <label className="text-xs tracking-widest uppercase text-gray-400">{formData.type === 'project' ? 'Título *' : 'Nombre Interno (No se ve) *'}</label>
                   <input required name="title" value={formData.title} onChange={handleInputChange} className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none" />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs tracking-widest uppercase text-gray-400">URL Imagen (Unsplash, Imgur, etc) *</label>
+                  <label className="text-xs tracking-widest uppercase text-gray-400">URL Imagen/Gif *</label>
                   <input required name="image_url" value={formData.image_url} onChange={handleInputChange} className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs tracking-widest uppercase text-gray-400">Link del Proyecto Web (Opcional)</label>
-                  <input name="link_url" value={formData.link_url} onChange={handleInputChange} placeholder="https://..." className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs tracking-widest uppercase text-gray-400">Tecnologías (separadas por coma)</label>
-                  <input name="tags" value={formData.tags} onChange={handleInputChange} placeholder="React, Node.js, Supabase" className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none" />
-                </div>
-              </div>
+              {formData.type === 'project' && (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs tracking-widest uppercase text-gray-400">Link del Proyecto Web (Opcional)</label>
+                      <input name="link_url" value={formData.link_url} onChange={handleInputChange} placeholder="https://..." className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none" />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs tracking-widest uppercase text-gray-400">Tecnologías (separadas por coma)</label>
+                      <input name="tags" value={formData.tags} onChange={handleInputChange} placeholder="React, Node.js, Supabase" className="bg-black border border-[#333] p-3 text-white focus:border-accent outline-none" />
+                    </div>
+                  </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="text-xs tracking-widest uppercase text-gray-400">Descripción Larga (Para el Pop-up)</label>
-                <div className="bg-black border border-[#333] text-white custom-editor">
-                  <DefaultEditor value={formData.long_description} onChange={handleWysiwygChange} />
-                </div>
-              </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-xs tracking-widest uppercase text-gray-400">Descripción Larga (Para el Pop-up)</label>
+                    <div className="bg-black border border-[#333] text-white custom-editor">
+                      <DefaultEditor value={formData.long_description} onChange={handleWysiwygChange} />
+                    </div>
+                  </div>
+                </>
+              )}
 
               <div className="flex flex-col gap-2 w-full md:w-1/3">
                 <label className="text-xs tracking-widest uppercase text-gray-400">Tamaño Tarjeta Galería</label>
@@ -353,7 +369,7 @@ export function AdminDashboard() {
               <h2 className="text-xl font-serif italic opacity-80">Inventario de Proyectos</h2>
               <button 
                 onClick={() => {
-                  setFormData({ title: '', short_description: '', long_description: '', image_url: '', link_url: '', tags: '', size: 'medium', image_position: 'object-center', image_fit: 'cover', order_index: 0 });
+                  setFormData({ title: '', short_description: '', long_description: '', image_url: '', link_url: '', tags: '', size: 'medium', image_position: 'object-center', image_fit: 'cover', order_index: 0, type: 'project' });
                   setShowForm(true);
                 }}
                 className="flex items-center gap-2 bg-white text-black px-4 py-2 font-sans uppercase tracking-widest text-xs font-bold hover:bg-gray-200 transition-colors"
@@ -377,9 +393,14 @@ export function AdminDashboard() {
                     </div>
                     <div className="p-4 flex flex-col flex-1">
                       <h3 className="text-lg font-serif mb-1 truncate">{project.title}</h3>
-                      <p className="text-xs text-accent font-sans tracking-widest uppercase mb-4">
-                        {new Date(project.created_at).toLocaleDateString()}
-                      </p>
+                      <div className="flex justify-between items-center mb-4">
+                        <p className="text-xs text-accent font-sans tracking-widest uppercase">
+                          {new Date(project.created_at).toLocaleDateString()}
+                        </p>
+                        <span className={`text-[9px] px-2 py-0.5 rounded-full border ${project.type === 'decoration' ? 'border-purple-500 text-purple-400' : 'border-blue-500 text-blue-400'} uppercase font-sans tracking-tighter`}>
+                          {project.type === 'decoration' ? 'Decoración' : 'Proyecto'}
+                        </span>
+                      </div>
                       <div className="mt-auto flex justify-end gap-3 pt-4 border-t border-[#222]">
                         <button onClick={() => startEdit(project)} className="text-gray-400 hover:text-white p-2 transition-colors">
                           <Edit2 size={18} />
