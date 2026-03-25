@@ -26,6 +26,17 @@ export function Navigation() {
         >
           Bio
         </a>
+        <a 
+          href="#section-skills" 
+          onClick={(e) => {
+            e.preventDefault();
+            const skills = document.getElementById('section-skills');
+            skills?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          className="hover:text-accent transition-colors hidden sm:inline"
+        >
+          Stack
+        </a>
       </div>
 
       <div className="absolute left-1/2 -translate-x-1/2">

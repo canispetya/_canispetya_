@@ -5,6 +5,7 @@ import { Navigation } from './components/Navigation';
 import { ProjectGallery } from './components/ProjectGallery';
 import { Contact } from './components/Contact';
 import { Bio } from './components/Bio';
+import { SkillsStack } from './components/SkillsStack';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Login } from './components/Login';
 import { Analytics } from '@vercel/analytics/react';
@@ -40,12 +41,29 @@ function Portfolio() {
 
     // Convert vertical native wheel scrolling to snap horizontally
     const handleWheel = (e: WheelEvent) => {
-      // Allow default vertical scroll if the target is a textarea (like in contact form)
+      // Allow default vertical scroll if the target is an input or is inside a scrollable container
       if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
+      
+      // Check if we're inside a scrollable element (like Bio text)
+      let target = e.target as HTMLElement;
+      while (target && target !== container) {
+        const style = window.getComputedStyle(target);
+        if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+          const isScrollable = target.scrollHeight > target.clientHeight;
+          if (isScrollable) {
+            // If scrolling up at top or down at bottom, allow snap to next section
+            const isAtTop = target.scrollTop <= 0 && e.deltaY < 0;
+            const isAtBottom = Math.ceil(target.scrollTop + target.clientHeight) >= target.scrollHeight && e.deltaY > 0;
+            if (!isAtTop && !isAtBottom) {
+              return; // Allow internal vertical scroll
+            }
+          }
+        }
+        target = target.parentElement as HTMLElement;
+      }
       
       const modal = document.querySelector('.z-\\[100\\]');
       if (modal) {
-        // Proxy wheel event to the scrollable container inside the modal
         const scrollable = modal.querySelector('.overflow-y-auto');
         if (scrollable) {
           scrollable.scrollBy({ top: e.deltaY, behavior: 'auto' });
@@ -57,10 +75,20 @@ function Portfolio() {
       handleScroll(e.deltaY);
     };
 
-    // Keyboard support for immediate interaction
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
       
+      // Similar logic for arrow keys in scrollable containers
+      let target = document.activeElement as HTMLElement;
+      if (target && target.tagName !== 'BODY') {
+        while (target && target !== container) {
+          const style = window.getComputedStyle(target);
+          if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') return; // Let the element handle arrow keys
+          }
+          target = target.parentElement as HTMLElement;
+        }
+      }
       const modal = document.querySelector('.z-\\[100\\]');
       if (modal) {
         const scrollable = modal.querySelector('.overflow-y-auto') as HTMLElement;
@@ -105,7 +133,7 @@ function Portfolio() {
         ref={containerRef}
         id="main-scroll-container"
         tabIndex={0}
-        className="flex h-[100dvh] w-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth outline-none focus:outline-none"
+        className="flex h-[100dvh] w-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth outline-none focus:outline-none scrollbar-hide"
         style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }} // Hide native scrollbar for cleanliness
       >
         <div id="section-hero" className="flex-none w-screen h-[100dvh] snap-always snap-center shrink-0">
@@ -119,6 +147,10 @@ function Portfolio() {
 
         <div id="section-bio" className="flex-none w-screen h-[100dvh] snap-always snap-center shrink-0">
           <Bio />
+        </div>
+
+        <div id="section-skills" className="flex-none w-screen h-[100dvh] snap-always snap-center shrink-0">
+          <SkillsStack />
         </div>
 
         <div id="section-contact" className="flex-none w-screen h-[100dvh] snap-always snap-center shrink-0">

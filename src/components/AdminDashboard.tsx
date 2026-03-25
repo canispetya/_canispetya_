@@ -28,12 +28,21 @@ interface BioData {
   badges: string[];
 }
 
+interface SkillCategory {
+  id: string;
+  title: string;
+  icon: string;
+  skills: string[];
+  order_index: number;
+}
+
 export function AdminDashboard() {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<Project[]>([]);
   const [bioData, setBioData] = useState<BioData | null>(null);
-  const [activeTab, setActiveTab] = useState<'projects' | 'bio'>('projects');
+  const [skillCategories, setSkillCategories] = useState<SkillCategory[]>([]);
+  const [activeTab, setActiveTab] = useState<'projects' | 'bio' | 'skills'>('projects');
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   
@@ -80,6 +89,7 @@ export function AdminDashboard() {
 
       fetchProjects();
       fetchBio();
+      fetchSkillCategories();
     };
 
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -124,6 +134,39 @@ export function AdminDashboard() {
         badges: data.badges?.join(', ') || ''
       });
     }
+  };
+
+  const fetchSkillCategories = async () => {
+    const { data, error } = await supabase
+      .from('skill_categories')
+      .select('*')
+      .order('order_index', { ascending: true });
+    if (error) console.error('Error fetching skills:', error);
+    else if (data) setSkillCategories(data);
+  };
+
+  const handleSkillCategoryUpdate = async (category: SkillCategory) => {
+    const { error } = await supabase
+      .from('skill_categories')
+      .update({ title: category.title, icon: category.icon, skills: category.skills, order_index: category.order_index })
+      .eq('id', category.id);
+    if (error) { console.error('Update error:', error); alert('Error: ' + error.message); }
+    else fetchSkillCategories();
+  };
+
+  const handleSkillCategoryAdd = async () => {
+    const { error } = await supabase
+      .from('skill_categories')
+      .insert([{ title: 'Nueva Categoría', icon: '🔧', skills: [], order_index: skillCategories.length }]);
+    if (error) { console.error('Insert error:', error); alert('Error: ' + error.message); }
+    else fetchSkillCategories();
+  };
+
+  const handleSkillCategoryDelete = async (id: string) => {
+    if (!window.confirm('¿Eliminar esta categoría?')) return;
+    const { error } = await supabase.from('skill_categories').delete().eq('id', id);
+    if (error) console.error('Delete error:', error);
+    else fetchSkillCategories();
   };
 
   const handleLogout = async () => {
@@ -272,6 +315,12 @@ export function AdminDashboard() {
           >
             Mi Biografía
           </button>
+          <button 
+            onClick={() => setActiveTab('skills')}
+            className={`pb-4 px-2 text-xs font-sans uppercase tracking-[0.2em] transition-all ${activeTab === 'skills' ? 'text-accent border-b-2 border-accent' : 'text-gray-500 hover:text-white'}`}
+          >
+            Stack & Skills
+          </button>
         </div>
 
         {activeTab === 'projects' ? (
@@ -419,7 +468,7 @@ export function AdminDashboard() {
               </div>
             )}
           </div>
-        )) : (
+        )) : activeTab === 'bio' ? (
           <div className="bg-[#0a0a0a] border border-[#333] p-8 rounded-sm">
             <h2 className="text-xl font-serif italic text-accent mb-8">Editar Biografía</h2>
             <form onSubmit={handleBioSubmit} className="flex flex-col gap-6 font-sans">
@@ -468,7 +517,99 @@ export function AdminDashboard() {
               </button>
             </form>
           </div>
-        )}
+        ) : activeTab === 'skills' ? (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-xl font-serif italic text-accent">Stack & Herramientas</h2>
+              <button
+                onClick={handleSkillCategoryAdd}
+                className="flex items-center gap-2 bg-white text-black px-4 py-2 font-sans uppercase tracking-widest text-xs font-bold hover:bg-gray-200 transition-colors"
+              >
+                <Plus size={16} /> Nueva Categoría
+              </button>
+            </div>
+
+            {skillCategories.map((cat) => (
+              <div key={cat.id} className="bg-[#0a0a0a] border border-[#333] p-6 rounded-sm">
+                <div className="flex items-center gap-4 mb-4">
+                  <input
+                    value={cat.icon}
+                    onChange={(e) => {
+                      const updated = skillCategories.map(c => c.id === cat.id ? { ...c, icon: e.target.value } : c);
+                      setSkillCategories(updated);
+                    }}
+                    className="bg-black border border-[#333] p-2 text-white w-16 text-center text-lg focus:border-accent outline-none"
+                    placeholder="🔧"
+                  />
+                  <input
+                    value={cat.title}
+                    onChange={(e) => {
+                      const updated = skillCategories.map(c => c.id === cat.id ? { ...c, title: e.target.value } : c);
+                      setSkillCategories(updated);
+                    }}
+                    className="bg-black border border-[#333] p-2 text-white flex-1 focus:border-accent outline-none font-sans text-sm"
+                    placeholder="Nombre de categoría"
+                  />
+                  <input
+                    type="number"
+                    value={cat.order_index}
+                    onChange={(e) => {
+                      const updated = skillCategories.map(c => c.id === cat.id ? { ...c, order_index: Number(e.target.value) } : c);
+                      setSkillCategories(updated);
+                    }}
+                    className="bg-black border border-[#333] p-2 text-white w-20 focus:border-accent outline-none font-sans text-sm"
+                    title="Orden"
+                  />
+                  <button
+                    onClick={() => handleSkillCategoryDelete(cat.id)}
+                    className="text-gray-500 hover:text-red-500 p-2 transition-colors"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {cat.skills.map((skill, i) => (
+                    <div key={i} className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-full px-3 py-1 group">
+                      <span className="text-xs text-gray-300 font-sans">{skill}</span>
+                      <button
+                        onClick={() => {
+                          const updated = skillCategories.map(c =>
+                            c.id === cat.id ? { ...c, skills: c.skills.filter((_, idx) => idx !== i) } : c
+                          );
+                          setSkillCategories(updated);
+                        }}
+                        className="text-gray-600 hover:text-red-400 transition-colors ml-1"
+                      >
+                        <X size={12} />
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    onClick={() => {
+                      const newSkill = window.prompt('Nombre del skill:');
+                      if (!newSkill?.trim()) return;
+                      const updated = skillCategories.map(c =>
+                        c.id === cat.id ? { ...c, skills: [...c.skills, newSkill.trim()] } : c
+                      );
+                      setSkillCategories(updated);
+                    }}
+                    className="flex items-center gap-1 border border-dashed border-white/20 rounded-full px-3 py-1 text-xs text-gray-500 hover:text-white hover:border-accent transition-colors font-sans"
+                  >
+                    <Plus size={12} /> Agregar
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => handleSkillCategoryUpdate(cat)}
+                  className="text-xs font-sans uppercase tracking-widest text-accent hover:text-white border border-accent/30 px-4 py-2 hover:bg-accent/10 transition-colors"
+                >
+                  Guardar Categoría
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );
