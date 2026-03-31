@@ -2,6 +2,22 @@
 
 Este proyecto es el portafolio personal de **CANISPETYA**, desarrollado con una estética cinematográfica, moderna y de alto rendimiento. El sitio combina un diseño visual impactante con una arquitectura técnica robusta.
 
+## 🎯 Objetivos de la Aplicación
+
+El objetivo fundamental de esta plataforma es servir como un portafolio interactivo para exhibir proyectos, habilidades técnicas e hitos profesionales de manera inmersiva. Además, la aplicación está diseñada para demostrar pleno dominio en el desarrollo web full-stack, destacando una interfaz de usuario fluida con animaciones complejas (Framer Motion) y un sistema robusto de gestión de contenidos mediante un panel de administración conectado a Supabase en tiempo real.
+
+## 👨‍💻 Autor
+
+**Nicolas (CANISPETYA)**  
+Desarrollador Full Stack JavaScript con enfoque en crear tecnología con propósito e impacto social, especialmente en el bienestar animal. Combina la lógica pura (React, Node.js) con una enorme pasión por la dirección de arte, el diseño UI/UX y la creación de marcas.
+Su visión global, nutrida por años de experiencia multicultural y fluidez en inglés y portugués, le permite ingeniar soluciones que no solo funcionen a la perfección técnicamente, sino que logren una genuina conexión emocional con los usuarios al interactuar con ellas.
+
+- **Portafolio web**: [www.canispetya.cl](https://www.canispetya.cl)
+
+## 🔗 Repositorio
+
+- **Código Fuente (GitHub)**: [https://github.com/canispetya/_canispetya_](https://github.com/canispetya/_canispetya_)
+
 ---
 
 ## 🛠️ Tecnologías y Herramientas

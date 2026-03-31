@@ -63,8 +63,8 @@ export function Bio() {
   if (!bio) return null;
   
   return (
-    <section id="section-bio" className="h-[100dvh] w-screen bg-[#080808] flex items-center pt-16 pb-6 lg:pt-20 lg:pb-10 px-[5vw] md:px-[8vw] lg:px-[10vw] overflow-hidden">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 lg:gap-12 xl:gap-16 items-center lg:items-center h-full overflow-hidden w-full">
+    <section id="section-bio" className="h-[100dvh] w-screen bg-[#080808] flex items-center pt-14 pb-4 lg:pt-20 lg:pb-10 px-[5vw] md:px-[8vw] lg:px-[10vw] overflow-hidden">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-3 lg:gap-12 xl:gap-16 items-center lg:items-center h-full overflow-hidden w-full justify-between">
         {/* Photo Section */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
@@ -74,7 +74,7 @@ export function Bio() {
         >
           <div className="absolute -inset-2 lg:-inset-3 xl:-inset-4 border border-accent/20 translate-x-1 translate-y-1 lg:translate-x-2 lg:translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500" />
           <div className="absolute -inset-2 lg:-inset-3 xl:-inset-4 border border-accent/40 -translate-x-1 -translate-y-1 lg:-translate-x-2 lg:-translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500" />
-          <div className="relative overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] max-h-[25vh] lg:max-h-[55vh] xl:max-h-[60vh] aspect-square">
+          <div className="relative overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] max-h-[20vh] lg:max-h-[55vh] xl:max-h-[60vh] aspect-square">
             <img 
               src={bio.photo_url} 
               alt="Bio" 
@@ -88,21 +88,21 @@ export function Bio() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col gap-3 lg:gap-5 xl:gap-6 flex-1 min-h-0 h-full overflow-hidden"
+          className="flex flex-col gap-2 lg:gap-5 xl:gap-6 flex-1 min-h-0 lg:h-full overflow-hidden"
         >
-          <div className="flex flex-col min-h-0 overflow-hidden flex-1">
-            <h2 className="text-2xl lg:text-3xl xl:text-4xl font-serif italic text-white mb-3 lg:mb-4 border-l-4 border-accent pl-4 lg:pl-6 shrink-0">
+          <div className="flex flex-col min-h-0 overflow-hidden lg:flex-1">
+            <h2 className="text-xl lg:text-3xl xl:text-4xl font-serif italic text-white mb-1 lg:mb-4 border-l-4 border-accent pl-4 lg:pl-6 shrink-0">
               Bio
             </h2>
             <div 
               ref={scrollRef}
               tabIndex={0}
-              className="text-gray-300 font-sans text-[11px] lg:text-[13px] xl:text-sm leading-relaxed opacity-80 prose prose-invert max-w-none overflow-y-auto pr-2 lg:pr-4 custom-scrollbar min-h-0 flex-1"
+              className="text-gray-300 font-sans text-[10px] lg:text-[13px] xl:text-sm leading-relaxed opacity-80 prose prose-invert max-w-none overflow-y-auto pr-2 lg:pr-4 custom-scrollbar min-h-0 lg:flex-1"
               dangerouslySetInnerHTML={{ __html: bio.review }}
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4 lg:gap-6 xl:gap-8 shrink-0 pb-2">
+          <div className="grid grid-cols-2 gap-3 lg:gap-6 xl:gap-8 shrink-0 pb-1">
             <div>
               <div className="flex items-center gap-2 text-accent mb-2 lg:mb-3">
                 <BookOpen size={14} className="lg:w-[16px] lg:h-[16px] xl:w-[18px] xl:h-[18px]" />

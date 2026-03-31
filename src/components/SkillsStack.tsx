@@ -70,25 +70,23 @@ export function SkillsStack() {
   if (categories.length === 0) return null;
 
   return (
-    <section id="section-skills" className="h-[100dvh] w-screen bg-[#080808] flex flex-col overflow-hidden">
-      {/* Header — accounts for nav + bookmark bar */}
-      <div className="pt-20 lg:pt-24 pb-4 lg:pb-6 px-[5vw] md:px-[8vw] lg:px-[10vw] shrink-0">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-2xl lg:text-3xl xl:text-4xl font-serif italic text-white border-l-4 border-accent pl-4 lg:pl-6"
-        >
-          Stack & Herramientas
-        </motion.h2>
-      </div>
-
-      {/* Scrollable content area */}
+    <section id="section-skills" className="h-[100dvh] w-screen bg-[#080808] flex flex-col overflow-hidden pt-14 lg:pt-20">
+      {/* Scrollable content area — title inside so everything centers together */}
       <div
         ref={scrollRef}
-        className="flex-1 min-h-0 overflow-y-auto custom-scrollbar px-[5vw] md:px-[8vw] lg:px-[10vw] pb-8"
+        className="flex-1 min-h-0 overflow-y-auto custom-scrollbar px-[5vw] md:px-[8vw] lg:px-[10vw] pb-6 flex flex-col justify-center"
       >
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="max-w-5xl mx-auto w-full">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-2xl lg:text-3xl xl:text-4xl font-serif italic text-white border-l-4 border-accent pl-4 lg:pl-6 mb-6 lg:mb-10"
+          >
+            Stack & Herramientas
+          </motion.h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 lg:gap-12 w-full">
           {categories.map((category, catIndex) => (
             <motion.div
               key={category.id}
@@ -136,6 +134,7 @@ export function SkillsStack() {
               </div>
             </motion.div>
           ))}
+        </div>
         </div>
       </div>
     </section>

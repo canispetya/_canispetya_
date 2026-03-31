@@ -91,14 +91,14 @@ export function Contact() {
 
       <div className="w-full max-w-lg md:max-w-xl flex flex-col gap-1 md:gap-2 box-border">
         {/* Title shifted down but with minimal gap to form */}
-        <div className="text-center md:mb-1 mt-6 md:mt-16">
+        <div className="text-center md:mb-1 mt-2 md:mt-16">
           <h2 className="text-xl md:text-3xl font-serif italic text-white opacity-80 border-b border-accent pb-1 md:pb-2 inline-block tracking-wider">
             Contáctame
           </h2>
         </div>
 
         <form 
-          className="flex flex-col gap-4 md:gap-6 w-full" 
+          className="flex flex-col gap-3 md:gap-6 w-full" 
           onSubmit={handleSubmit}
           noValidate
         >
@@ -130,7 +130,7 @@ export function Contact() {
           <div className="relative group">
             <textarea
               name="message"
-              rows={3}
+              rows={2}
               placeholder="Tu Mensaje"
               className={`w-full bg-transparent border-b ${errors.message ? 'border-accent' : 'border-white/20'} py-2 md:py-4 text-white font-serif italic text-base md:text-lg focus:border-accent outline-none transition-colors resize-none placeholder:text-gray-600 placeholder:uppercase placeholder:text-[10px] placeholder:tracking-widest placeholder:font-sans`}
             />
