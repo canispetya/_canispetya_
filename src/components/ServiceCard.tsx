@@ -64,7 +64,7 @@ export function ServiceCard({ service, onClick }: ServiceCardProps) {
           {service.title}
         </h3>
         {service.short_description && (
-          <p className="text-[10px] md:text-xs font-sans text-gray-400 leading-relaxed line-clamp-2 max-w-[300px]">
+          <p className="text-xs md:text-sm font-sans text-gray-300 leading-relaxed mb-2 max-w-full">
             {service.short_description}
           </p>
         )}
