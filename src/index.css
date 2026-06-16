@@ -161,3 +161,62 @@
   color: white;
   font-weight: 600;
 }
+
+/* ═══════════════════════════════════════
+   Admin Dashboard — Modern Editor Styles 
+   ═══════════════════════════════════════ */
+
+/* react-simple-wysiwyg overrides for dark theme */
+.custom-editor .rsw-editor {
+  background: transparent !important;
+  color: white !important;
+  min-height: 160px;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.875rem !important;
+}
+
+.custom-editor .rsw-toolbar {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.custom-editor .rsw-btn {
+  color: #888 !important;
+  transition: all 0.2s ease !important;
+}
+
+.custom-editor .rsw-btn:hover {
+  background: rgba(227, 66, 52, 0.1) !important;
+  color: #E34234 !important;
+}
+
+.custom-editor .rsw-ce {
+  padding: 16px !important;
+}
+
+/* Slide Up Animation */
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(12px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Shimmer loading effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.04) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}

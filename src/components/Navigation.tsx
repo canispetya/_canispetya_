@@ -16,6 +16,17 @@ export function Navigation() {
           Proyectos
         </a>
         <a 
+          href="#section-services" 
+          onClick={(e) => {
+            e.preventDefault();
+            const services = document.getElementById('section-services');
+            services?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          className="hover:text-accent transition-colors"
+        >
+          Servicios
+        </a>
+        <a 
           href="#section-bio" 
           onClick={(e) => {
             e.preventDefault();

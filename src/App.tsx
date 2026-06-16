@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Hero } from './components/Hero';
 import { Navigation } from './components/Navigation';
 import { ProjectGallery } from './components/ProjectGallery';
+import { ServiceGallery } from './components/ServiceGallery';
 import { Contact } from './components/Contact';
 import { Bio } from './components/Bio';
 import { SkillsStack } from './components/SkillsStack';
@@ -143,6 +144,10 @@ function Portfolio() {
         {/* Gallery is no longer w-screen, it expands based on content */}
         <div id="section-gallery" className="flex-none h-[100dvh] snap-always snap-start shrink-0">
           <ProjectGallery />
+        </div>
+
+        <div id="section-services" className="flex-none h-[100dvh] snap-always snap-start shrink-0">
+          <ServiceGallery />
         </div>
 
         <div id="section-bio" className="flex-none w-screen h-[100dvh] snap-always snap-center shrink-0">
