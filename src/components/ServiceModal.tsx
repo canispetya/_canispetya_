@@ -46,11 +46,6 @@ export function ServiceModal({ service, onClose }: ServiceModalProps) {
           />
           <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent opacity-100" />
           
-          {/* Icon badge on image */}
-          <div className="absolute top-6 left-6 bg-black/60 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2 flex items-center gap-2">
-            <span className="text-xl">{service.icon}</span>
-            <span className="text-[10px] font-sans uppercase tracking-widest text-accent font-bold">Servicio</span>
-          </div>
         </div>
 
         {/* Content Section */}
