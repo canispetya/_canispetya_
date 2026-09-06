@@ -44,11 +44,6 @@ export function ServiceCard({ service, onClick }: ServiceCardProps) {
         {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
 
-        {/* Service icon badge */}
-        <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm border border-white/10 rounded-full px-3 py-1.5 flex items-center gap-2">
-          <span className="text-base">{service.icon}</span>
-          <span className="text-[9px] font-sans uppercase tracking-widest text-accent font-bold">Servicio</span>
-        </div>
 
         {/* Hover View Button */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
