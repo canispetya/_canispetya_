@@ -38,8 +38,6 @@ export function Hero() {
         {/* Description */}
         <p className="text-xs sm:text-sm md:text-base text-gray-300 font-sans opacity-75 leading-relaxed text-center max-w-sm md:max-w-lg px-4">
           Creo aplicaciones web de alto rendimiento que abrazan el caos de los sistemas escalables modernos.
-          <br /><br />
-          Desarrollador full-stack especializado en React, Node y Supabase.
         </p>
       </div>
 
