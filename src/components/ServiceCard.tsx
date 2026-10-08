@@ -38,7 +38,7 @@ export function ServiceCard({ service, onClick }: ServiceCardProps) {
         <img 
           src={service.image_url} 
           alt={service.title}
-          className={`w-full h-full ${service.image_fit === 'contain' ? 'object-contain' : 'object-cover'} opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0 ${service.image_position || 'object-center'}`}
+          className={`w-full h-full ${service.image_fit === 'contain' ? 'object-contain' : 'object-cover'} opacity-90 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105 ${service.image_position || 'object-center'}`}
         />
         
         {/* Overlay gradient */}
